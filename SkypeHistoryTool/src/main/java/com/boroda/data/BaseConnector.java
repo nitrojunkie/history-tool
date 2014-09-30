@@ -1,4 +1,4 @@
-package com.dataart.data;
+package com.boroda.data;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.sqlite.SQLiteDataSource;

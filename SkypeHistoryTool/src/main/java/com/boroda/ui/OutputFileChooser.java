@@ -1,12 +1,11 @@
-package com.dataart.ui;
-
-import com.dataart.data.bean.Contact;
+package com.boroda.ui;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JList;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import java.awt.event.ActionEvent;
@@ -15,13 +14,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class ContactSelector extends JDialog {
+public class OutputFileChooser extends JDialog {
 	private JPanel contentPane;
 	private JButton buttonOK;
 	private JButton buttonCancel;
-	private JList contactsList;
+	private JTextField outputPath;
+	private JButton chooseFileButton;
 
-	public ContactSelector() {
+	public OutputFileChooser() {
 		setContentPane(contentPane);
 		setModal(true);
 		getRootPane().setDefaultButton(buttonOK);
@@ -52,6 +52,13 @@ public class ContactSelector extends JDialog {
 				onCancel();
 			}
 		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+		chooseFileButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onChooseFile();
+			}
+		});
 	}
 
 	private void onOK() {
@@ -64,12 +71,13 @@ public class ContactSelector extends JDialog {
 		dispose();
 	}
 
-	public void setData(Contact[] data) {
-		contactsList.setListData(data);
+	private void onChooseFile() {
+		JFileChooser saveFile = new JFileChooser();
+		saveFile.showSaveDialog(null);
 	}
 
 	public static void main(String[] args) {
-		ContactSelector dialog = new ContactSelector();
+		OutputFileChooser dialog = new OutputFileChooser();
 		dialog.pack();
 		dialog.setVisible(true);
 		System.exit(0);

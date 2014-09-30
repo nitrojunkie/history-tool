@@ -1,9 +1,9 @@
-package com.dataart;
+package com.boroda;
 
-import com.dataart.data.SkypeDbApi;
-import com.dataart.data.SkypeDbApiImpl;
-import com.dataart.data.bean.Contact;
-import com.dataart.ui.ContactSelector;
+import com.boroda.data.SkypeDbApi;
+import com.boroda.data.SkypeDbApiImpl;
+import com.boroda.data.bean.Contact;
+import com.boroda.ui.ContactSelector;
 
 import java.awt.EventQueue;
 import java.sql.SQLException;

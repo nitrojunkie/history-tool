@@ -1,6 +1,6 @@
-package com.dataart.data.processor;
+package com.boroda.data.processor;
 
-import com.dataart.data.bean.Message;
+import com.boroda.data.bean.Message;
 
 /**
  * Created by dmitrystarchak on 30/09/14.

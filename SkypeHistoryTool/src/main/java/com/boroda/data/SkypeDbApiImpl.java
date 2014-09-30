@@ -1,7 +1,7 @@
-package com.dataart.data;
+package com.boroda.data;
 
-import com.dataart.data.bean.Contact;
-import com.dataart.data.bean.Message;
+import com.boroda.data.bean.Contact;
+import com.boroda.data.bean.Message;
 
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;

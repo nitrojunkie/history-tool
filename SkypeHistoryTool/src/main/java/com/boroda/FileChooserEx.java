@@ -1,4 +1,4 @@
-package com.dataart;
+package com.boroda;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;

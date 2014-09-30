@@ -1,4 +1,4 @@
-package com.dataart.data.bean;
+package com.boroda.data.bean;
 
 /**
  * Created by dmitrystarchak on 30/09/14.

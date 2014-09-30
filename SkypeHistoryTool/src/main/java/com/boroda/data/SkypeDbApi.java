@@ -1,7 +1,7 @@
-package com.dataart.data;
+package com.boroda.data;
 
-import com.dataart.data.bean.Contact;
-import com.dataart.data.bean.Message;
+import com.boroda.data.bean.Contact;
+import com.boroda.data.bean.Message;
 
 import java.sql.SQLException;
 import java.util.List;
