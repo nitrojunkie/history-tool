@@ -13,6 +13,10 @@ import java.util.List;
  * Created by dmitrystarchak on 29/09/14.
  */
 public class Application implements Runnable {
+	ContactSelector contactSelector;
+	SkypeDbApi api;
+	List<Contact> contacts;
+
 	public static void main(String[] args) throws ClassNotFoundException {
 		Runnable r = new Application();
 
@@ -21,18 +25,18 @@ public class Application implements Runnable {
 
 	@Override
 	public void run() {
-		SkypeDbApi api = new SkypeDbApiImpl();
+		api = new SkypeDbApiImpl();
+		contactSelector = new ContactSelector();
+		contactSelector.pack();
 		try {
-			ContactSelector dialog = new ContactSelector();
-			dialog.pack();
-			List<Contact> list = api.getContacts();
-			dialog.setData(list.toArray(new Contact[list.size()]));
-
-			dialog.setVisible(true);
-
+			contacts = api.getContacts();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		contactSelector.setData(contacts.toArray(new Contact[contacts.size()]));
+
+		contactSelector.setVisible(true);
 		System.exit(0);
 	}
 }
