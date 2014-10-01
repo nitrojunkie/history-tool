@@ -1,6 +1,7 @@
 package com.boroda.ui;
 
 import com.boroda.data.bean.Contact;
+import com.boroda.event.ContactSelectionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -20,6 +21,8 @@ public class ContactSelector extends JDialog {
 	private JButton buttonOK;
 	private JButton buttonCancel;
 	private JList contactsList;
+
+	private ContactSelectionListener contactSelectionListener;
 
 	public ContactSelector() {
 		setContentPane(contentPane);
@@ -55,8 +58,8 @@ public class ContactSelector extends JDialog {
 	}
 
 	private void onOK() {
-// add your code here
-		dispose();
+		Contact selected = (Contact) contactsList.getSelectedValue();
+		contactSelectionListener.onContactSelected(new ContactSelectionListener.ContactSelectionEvent(selected));
 	}
 
 	private void onCancel() {
@@ -68,10 +71,7 @@ public class ContactSelector extends JDialog {
 		contactsList.setListData(data);
 	}
 
-	public static void main(String[] args) {
-		ContactSelector dialog = new ContactSelector();
-		dialog.pack();
-		dialog.setVisible(true);
-		System.exit(0);
+	public void setContactSelectionListener(ContactSelectionListener contactSelectionListener) {
+		this.contactSelectionListener = contactSelectionListener;
 	}
 }

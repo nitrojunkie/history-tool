@@ -1,5 +1,7 @@
 package com.boroda.ui;
 
+import com.boroda.event.FileSelectionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -20,6 +22,8 @@ public class OutputFileChooser extends JDialog {
 	private JButton buttonCancel;
 	private JTextField outputPath;
 	private JButton chooseFileButton;
+
+	private FileSelectionListener fileSelectionListener;
 
 	public OutputFileChooser() {
 		setContentPane(contentPane);
@@ -62,8 +66,7 @@ public class OutputFileChooser extends JDialog {
 	}
 
 	private void onOK() {
-// add your code here
-		dispose();
+		fileSelectionListener.onFileChosen(new FileSelectionListener.FileSelectionEvent(outputPath.getText()));
 	}
 
 	private void onCancel() {
@@ -72,14 +75,17 @@ public class OutputFileChooser extends JDialog {
 	}
 
 	private void onChooseFile() {
-		JFileChooser saveFile = new JFileChooser();
-		saveFile.showSaveDialog(null);
+		JFileChooser saveFile = new JFileChooser(outputPath.getText());
+		if (saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+			outputPath.setText(saveFile.getSelectedFile().getPath());
+		}
 	}
 
-	public static void main(String[] args) {
-		OutputFileChooser dialog = new OutputFileChooser();
-		dialog.pack();
-		dialog.setVisible(true);
-		System.exit(0);
+	public void setOutputPath(String path) {
+		outputPath.setText(path);
+	}
+
+	public void setFileSelectionListener(FileSelectionListener fileSelectionListener) {
+		this.fileSelectionListener = fileSelectionListener;
 	}
 }

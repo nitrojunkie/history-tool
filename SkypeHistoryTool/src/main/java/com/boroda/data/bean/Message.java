@@ -10,7 +10,7 @@ public class Message {
 	private String author;
 	private String dialogPartner;
 	private long timestamp;
-	private String bodyXml;
+	private String body_xml;
 
 	public int getId() {
 		return id;
@@ -60,11 +60,11 @@ public class Message {
 		this.timestamp = timestamp;
 	}
 
-	public String getBodyXml() {
-		return bodyXml;
+	public String getBody_xml() {
+		return body_xml;
 	}
 
-	public void setBodyXml(String bodyXml) {
-		this.bodyXml = bodyXml;
+	public void setBody_xml(String body_xml) {
+		this.body_xml = body_xml;
 	}
 }
