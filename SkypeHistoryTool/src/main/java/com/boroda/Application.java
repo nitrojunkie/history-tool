@@ -6,12 +6,7 @@ import com.boroda.data.bean.Contact;
 import com.boroda.data.bean.Message;
 import com.boroda.data.processor.MessageProcessor;
 import com.boroda.data.processor.SimpleTextProcessor;
-import com.boroda.event.ContactSelectionListener;
-import com.boroda.event.FileSelectionListener;
-import com.boroda.ui.ContactSelector;
-import com.boroda.ui.OutputFileChooser;
 
-import java.awt.EventQueue;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,9 +19,7 @@ import java.util.List;
 /**
  * Created by dmitrystarchak on 29/09/14.
  */
-public class Application implements Runnable {
-	ContactSelector contactSelector;
-	OutputFileChooser outputFileChooser;
+public class Application {
 	SkypeDbApi api;
 	MessageProcessor processor;
 	List<Contact> contacts;
@@ -34,97 +27,65 @@ public class Application implements Runnable {
 	String selectedPath;
 
 	public static void main(String[] args) throws ClassNotFoundException {
-		Runnable r = new Application();
-
-		EventQueue.invokeLater(r);
+		javax.swing.SwingUtilities.invokeLater(new Controller(new Application()));
 	}
 
-	@Override
-	public void run() {
+	public Application() {
 		api = new SkypeDbApiImpl();
-
-		contactSelector = new ContactSelector();
-		outputFileChooser = new OutputFileChooser();
-
 		processor = new SimpleTextProcessor();
-
-		contactSelector.setContactSelectionListener(new ContactSelectionListener() {
-			@Override
-			public void onContactSelected(ContactSelectionEvent event) {
-				Application.this.onContactSelected(event.getContact());
-			}
-		});
-
-		outputFileChooser.setFileSelectionListener(new FileSelectionListener() {
-			@Override
-			public void onFileChosen(FileSelectionEvent event) {
-				Application.this.onFileSelected(event.getPath());
-			}
-		});
-
-		onStart();
-
-		System.exit(0);
 	}
 
-	public void onStart() {
+	public Contact[] getContacts() {
 		try {
 			contacts = api.getContacts();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		contactSelector.setData(contacts.toArray(new Contact[contacts.size()]));
-		contactSelector.pack();
-		contactSelector.setVisible(true);
+		return contacts.toArray(new Contact[contacts.size()]); //TODO: make api return array
 	}
 
-	public void onExit() {
+	public void saveMessagesAsText(List<Message> messages, String path, MessageProcessor processor) {
+		File file = new File(path);
 
+		try {
+			file.createNewFile();
+
+			OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
+			for (Message message : messages) {
+				String s = processor.processMessage(message);
+				outputStream.write(s.getBytes(Charset.defaultCharset()));
+			}
+			outputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void onContactSelected(Contact contact) {
-		selectedContact = contact;
-		contactSelector.dispose();
-
-		outputFileChooser.pack();
-		outputFileChooser.setVisible(true);
+	public void setSelectedContact(Contact selectedContact) {
+		this.selectedContact = selectedContact;
 	}
 
-	public void onFileSelected(String path) {
-		outputFileChooser.dispose();
+	public boolean isFileExist(String path) {
+		File file = new File(path);
+		return file.exists();
+	}
 
+	public void saveMessages() {
 		List<Message> messages = null;
-
 		try {
 			messages = api.getMessages(selectedContact.getSkypename());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		if(messages != null && !messages.isEmpty()) {
-			saveMessagesAsText(messages, path, processor);
+		if (messages != null && !messages.isEmpty()) {
+			saveMessagesAsText(messages, selectedPath, processor);
 		}
 
 	}
 
-
-	public void saveMessagesAsText(List<Message> messages, String path, MessageProcessor processor) {
-		File file = new File(path);
-
-		try {
-			if(file.createNewFile()) {
-				OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
-				for(Message message : messages) {
-					String s = processor.processMessage(message);
-					outputStream.write(s.getBytes(Charset.defaultCharset()));
-				}
-
-				outputStream.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+	public void setSelectedPath(String selectedPath) {
+		this.selectedPath = selectedPath;
 	}
 }

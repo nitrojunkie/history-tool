@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
@@ -22,6 +23,7 @@ public class OutputFileChooser extends JDialog {
 	private JButton buttonCancel;
 	private JTextField outputPath;
 	private JButton chooseFileButton;
+	private JProgressBar progressBar;
 
 	private FileSelectionListener fileSelectionListener;
 
@@ -83,6 +85,14 @@ public class OutputFileChooser extends JDialog {
 
 	public void setOutputPath(String path) {
 		outputPath.setText(path);
+	}
+
+	public void enableProgressBar() {
+		progressBar.setEnabled(true);
+	}
+
+	public void disableProgressBar() {
+		progressBar.setEnabled(false);
 	}
 
 	public void setFileSelectionListener(FileSelectionListener fileSelectionListener) {
