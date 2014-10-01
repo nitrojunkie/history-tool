@@ -26,13 +26,18 @@ public class Application {
 	Contact selectedContact;
 	String selectedPath;
 
+	View view;
+
 	public static void main(String[] args) throws ClassNotFoundException {
-		javax.swing.SwingUtilities.invokeLater(new Controller(new Application()));
+		Application model = new Application();
+
+		javax.swing.SwingUtilities.invokeLater(model.view);
 	}
 
 	public Application() {
 		api = new SkypeDbApiImpl();
 		processor = new SimpleTextProcessor();
+		view = new View(this);
 	}
 
 	public Contact[] getContacts() {
@@ -72,17 +77,25 @@ public class Application {
 	}
 
 	public void saveMessages() {
-		List<Message> messages = null;
-		try {
-			messages = api.getMessages(selectedContact.getSkypename());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				List<Message> messages = null;
+				try {
+					messages = api.getMessages(selectedContact.getSkypename());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 
-		if (messages != null && !messages.isEmpty()) {
-			saveMessagesAsText(messages, selectedPath, processor);
-		}
+				if (messages != null && !messages.isEmpty()) {
+					saveMessagesAsText(messages, selectedPath, processor);
+				}
+				view.onFileSaved();
+			}
+		};
 
+		Thread t = new Thread(r);
+		t.start();
 	}
 
 	public void setSelectedPath(String selectedPath) {

@@ -65,6 +65,8 @@ public class OutputFileChooser extends JDialog {
 				onChooseFile();
 			}
 		});
+
+		progressBar.setVisible(false);
 	}
 
 	private void onOK() {
@@ -88,11 +90,11 @@ public class OutputFileChooser extends JDialog {
 	}
 
 	public void enableProgressBar() {
-		progressBar.setEnabled(true);
+		progressBar.setVisible(true);
 	}
 
 	public void disableProgressBar() {
-		progressBar.setEnabled(false);
+		progressBar.setVisible(false);
 	}
 
 	public void setFileSelectionListener(FileSelectionListener fileSelectionListener) {

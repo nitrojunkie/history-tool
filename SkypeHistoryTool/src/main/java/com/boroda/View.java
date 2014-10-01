@@ -11,12 +11,12 @@ import javax.swing.JOptionPane;
 /**
  * Created by dmitrystarchak on 01/10/14.
  */
-public class Controller implements Runnable {
+public class View implements Runnable {
 	private ContactSelector contactSelector;
 	private OutputFileChooser outputFileChooser;
 	private Application model;
 
-	public Controller(Application model) {
+	public View(Application model) {
 		this.model = model;
 	}
 
@@ -28,14 +28,14 @@ public class Controller implements Runnable {
 		contactSelector.setContactSelectionListener(new ContactSelectionListener() {
 			@Override
 			public void onContactSelected(ContactSelectionEvent event) {
-				Controller.this.onContactSelected(event.getContact());
+				View.this.onContactSelected(event.getContact());
 			}
 		});
 
 		outputFileChooser.setFileSelectionListener(new FileSelectionListener() {
 			@Override
 			public void onFileChosen(FileSelectionEvent event) {
-				Controller.this.onFileSelected(event.getPath());
+				View.this.onFileSelected(event.getPath());
 			}
 		});
 
@@ -77,7 +77,9 @@ public class Controller implements Runnable {
 		outputFileChooser.enableProgressBar();
 
 		model.saveMessages();
+	}
 
+	public void onFileSaved() {
 		outputFileChooser.disableProgressBar();
 		outputFileChooser.dispose();
 	}
