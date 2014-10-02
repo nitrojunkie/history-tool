@@ -47,7 +47,7 @@ public class Application {
 			e.printStackTrace();
 		}
 
-		return contacts.toArray(new Contact[contacts.size()]); //TODO: make api return array
+		return contacts.toArray(new Contact[contacts.size()]);
 	}
 
 	public void saveMessagesAsText(List<Message> messages, String path, MessageProcessor processor) {

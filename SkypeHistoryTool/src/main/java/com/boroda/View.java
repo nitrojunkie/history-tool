@@ -8,10 +8,15 @@ import com.boroda.ui.OutputFileChooser;
 
 import javax.swing.JOptionPane;
 
+import java.util.ResourceBundle;
+
 /**
  * Created by dmitrystarchak on 01/10/14.
  */
 public class View implements Runnable {
+	public static String OVERWRITE_DIALOG_TITLE_KEY = "fileOverwriteDialogTitle";
+	public static String OVERWRITE_DIALOG_MESSAGE_KEY = "fileOverwriteDialogMessage";
+	private ResourceBundle labels = ResourceBundle.getBundle("labels");
 	private ContactSelector contactSelector;
 	private OutputFileChooser outputFileChooser;
 	private Application model;
@@ -47,6 +52,7 @@ public class View implements Runnable {
 	public void onStart() {
 		contactSelector.setData(model.getContacts());
 		contactSelector.pack();
+		contactSelector.setLocationRelativeTo(null);
 		contactSelector.setVisible(true);
 	}
 
@@ -62,19 +68,21 @@ public class View implements Runnable {
 
 	public void showFileChooser() {
 		outputFileChooser.pack();
+		outputFileChooser.setLocationRelativeTo(null);
 		outputFileChooser.setVisible(true);
 	}
 
 	public void onFileSelected(String path) {
 		if (model.isFileExist(path)) {
-			if (JOptionPane.showConfirmDialog(null, "Would You Like to Overwrite Selected File?", "Warning", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(null, labels.getString(OVERWRITE_DIALOG_MESSAGE_KEY),
+					labels.getString(OVERWRITE_DIALOG_TITLE_KEY), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				showFileChooser();
 			}
 		}
 
 		model.setSelectedPath(path);
 
-		outputFileChooser.enableProgressBar();
+		outputFileChooser.enableWorkInProgress();
 
 		model.saveMessages();
 	}

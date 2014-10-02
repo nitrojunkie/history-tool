@@ -89,7 +89,9 @@ public class OutputFileChooser extends JDialog {
 		outputPath.setText(path);
 	}
 
-	public void enableProgressBar() {
+	public void enableWorkInProgress() {
+		buttonOK.setEnabled(false);
+		buttonCancel.setEnabled(false);
 		progressBar.setVisible(true);
 	}
 

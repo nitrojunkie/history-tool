@@ -15,11 +15,9 @@ import java.util.List;
 public class SkypeDbApiImpl extends BaseConnector implements SkypeDbApi{
 	@Override
 	public List<Contact> getContacts() throws SQLException {
-		//ResultSetHandler<Contact> handler = new BeanHandler<Contact>(Contact.class);
-
 		ResultSetHandler<List<Contact>> handler = new BeanListHandler<Contact>(Contact.class);
 
-		List<Contact> contacts = run.query("SELECT * FROM Contacts WHERE type = 1", handler);
+		List<Contact> contacts = run.query("SELECT * FROM Contacts WHERE type = 1 ORDER BY lastused_timestamp DESC ", handler);
 
 		return contacts;
 	}

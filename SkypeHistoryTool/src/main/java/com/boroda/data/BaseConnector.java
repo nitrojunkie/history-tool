@@ -16,7 +16,8 @@ public class BaseConnector {
 	//TODO: check if DB exists
 	public BaseConnector() {
 		ds = new SQLiteDataSource();
-		ds.setUrl("jdbc:sqlite:/Users/dmitrystarchak/Library/Application Support/Skype/boroda.item/main.db");
+		//ds.setUrl("jdbc:sqlite:/Users/dmitrystarchak/Library/Application Support/Skype/boroda.item/main.db");
+		ds.setUrl("jdbc:sqlite:/Users/dmitrystarchak/Projects/main.db");
 
 		run = new QueryRunner(ds);
 	}
