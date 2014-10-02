@@ -7,5 +7,7 @@ import com.boroda.data.bean.Message;
  */
 public interface MessageProcessor {
 
+	public String getDefaultExtension();
+
 	public String processMessage(Message message);
 }

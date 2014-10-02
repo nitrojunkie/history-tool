@@ -3,6 +3,8 @@ package com.boroda.data;
 import org.apache.commons.dbutils.QueryRunner;
 import org.sqlite.SQLiteDataSource;
 
+import java.io.File;
+
 /**
  * Created by dmitrystarchak on 29/09/14.
  */
@@ -11,13 +13,9 @@ public class BaseConnector {
 
 	protected QueryRunner run;
 
-	//TODO: generate path depending on username
-	//TODO: generate path depending on OS
-	//TODO: check if DB exists
-	public BaseConnector() {
+	public BaseConnector(File dbPath) {
 		ds = new SQLiteDataSource();
-		//ds.setUrl("jdbc:sqlite:/Users/dmitrystarchak/Library/Application Support/Skype/boroda.item/main.db");
-		ds.setUrl("jdbc:sqlite:/Users/dmitrystarchak/Projects/main.db");
+		ds.setUrl("jdbc:sqlite:" + dbPath.getPath() + "/main.db");
 
 		run = new QueryRunner(ds);
 	}

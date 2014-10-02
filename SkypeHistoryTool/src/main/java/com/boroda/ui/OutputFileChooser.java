@@ -80,6 +80,12 @@ public class OutputFileChooser extends JDialog {
 
 	private void onChooseFile() {
 		JFileChooser saveFile = new JFileChooser(outputPath.getText());
+
+		//For future implementations
+		//FileFilter fileFilter = new ExtentionFileFilter("Text file", "txt", "text");
+		//saveFile.addChoosableFileFilter(fileFilter);
+		//saveFile.setAcceptAllFileFilterUsed(false);
+
 		if (saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 			outputPath.setText(saveFile.getSelectedFile().getPath());
 		}
@@ -96,6 +102,8 @@ public class OutputFileChooser extends JDialog {
 	}
 
 	public void disableProgressBar() {
+		buttonOK.setEnabled(true);
+		buttonCancel.setEnabled(true);
 		progressBar.setVisible(false);
 	}
 

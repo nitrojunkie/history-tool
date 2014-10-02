@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 public class View implements Runnable {
 	public static String OVERWRITE_DIALOG_TITLE_KEY = "fileOverwriteDialogTitle";
 	public static String OVERWRITE_DIALOG_MESSAGE_KEY = "fileOverwriteDialogMessage";
+
 	private ResourceBundle labels = ResourceBundle.getBundle("labels");
 	private ContactSelector contactSelector;
 	private OutputFileChooser outputFileChooser;
@@ -44,9 +45,8 @@ public class View implements Runnable {
 			}
 		});
 
+		outputFileChooser.setOutputPath(model.getSelectedPath());
 		onStart();
-
-		System.exit(0);
 	}
 
 	public void onStart() {
@@ -73,14 +73,14 @@ public class View implements Runnable {
 	}
 
 	public void onFileSelected(String path) {
+		model.setSelectedPath(path);
+
 		if (model.isFileExist(path)) {
 			if (JOptionPane.showConfirmDialog(null, labels.getString(OVERWRITE_DIALOG_MESSAGE_KEY),
 					labels.getString(OVERWRITE_DIALOG_TITLE_KEY), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				showFileChooser();
 			}
 		}
-
-		model.setSelectedPath(path);
 
 		outputFileChooser.enableWorkInProgress();
 
@@ -90,5 +90,7 @@ public class View implements Runnable {
 	public void onFileSaved() {
 		outputFileChooser.disableProgressBar();
 		outputFileChooser.dispose();
+
+		onStart();
 	}
 }

@@ -6,13 +6,18 @@ import com.boroda.data.bean.Message;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by dmitrystarchak on 29/09/14.
  */
-public class SkypeDbApiImpl extends BaseConnector implements SkypeDbApi{
+public class SkypeDbApiImpl extends BaseConnector implements SkypeDbApi {
+	public SkypeDbApiImpl(File dbPath) {
+		super(dbPath);
+	}
+
 	@Override
 	public List<Contact> getContacts() throws SQLException {
 		ResultSetHandler<List<Contact>> handler = new BeanListHandler<Contact>(Contact.class);

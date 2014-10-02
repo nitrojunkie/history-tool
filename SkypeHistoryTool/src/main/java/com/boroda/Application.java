@@ -20,24 +20,47 @@ import java.util.List;
  * Created by dmitrystarchak on 29/09/14.
  */
 public class Application {
-	SkypeDbApi api;
-	MessageProcessor processor;
-	List<Contact> contacts;
-	Contact selectedContact;
-	String selectedPath;
+	private SkypeDbApi api;
+	private MessageProcessor processor;
+	private List<Contact> contacts;
+	private Contact selectedContact;
+	private String selectedPath;
 
-	View view;
+	private View view;
 
 	public static void main(String[] args) throws ClassNotFoundException {
-		Application model = new Application();
+		if(args.length == 0) {
+			Application model = new Application();
 
-		javax.swing.SwingUtilities.invokeLater(model.view);
+			javax.swing.SwingUtilities.invokeLater(model.view);
+		} else {
+			System.out.println("Command line is not supported.");
+			System.exit(1);
+		}
+
 	}
 
 	public Application() {
-		api = new SkypeDbApiImpl();
-		processor = new SimpleTextProcessor();
+		File dbPath = null;
+
+		File[] dbPaths = FileSystemUtil.findDBs();
+
 		view = new View(this);
+
+		if(dbPaths.length == 0) {
+			//TODO: Error
+		} else if(dbPaths.length == 1) {
+			//Ok. Select it
+			//dbPath = dbPaths[0];
+			dbPath = new File("/Users/dmitrystarchak/Projects/"); //For debugging
+		} else {
+			//TODO: Offer a choice
+		}
+
+		api = new SkypeDbApiImpl(dbPath);
+		processor = new SimpleTextProcessor();
+
+		selectedPath = System.getProperty("user.home");
 	}
 
 	public Contact[] getContacts() {
@@ -100,5 +123,9 @@ public class Application {
 
 	public void setSelectedPath(String selectedPath) {
 		this.selectedPath = selectedPath;
+	}
+
+	public String getSelectedPath() {
+		return selectedPath;
 	}
 }
