@@ -6,7 +6,8 @@ import java.io.FilenameFilter;
 import java.util.Locale;
 
 /**
- * Created by dmitrystarchak on 02/10/14.
+ * Class dedicated to file system related jobs:
+ * - Discovering paths to Skype DB
  */
 public class FileSystemUtil {
 	public static final String USERHOME = System.getProperty("user.home");
