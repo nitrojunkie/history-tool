@@ -51,7 +51,6 @@ public class Application {
 			view.onDBNotFound();
 			System.exit(1);
 		} else if (dbPaths.length == 1) {
-			//Ok. Select it
 			//dbPath = dbPaths[0];
 			dbPath = new File("/Users/dmitrystarchak/Projects/"); //For debugging
 		} else {
