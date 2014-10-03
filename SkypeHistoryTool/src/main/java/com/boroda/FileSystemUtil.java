@@ -11,6 +11,7 @@ import java.util.Locale;
 public class FileSystemUtil {
 	public static final String USERHOME = System.getProperty("user.home");
 	public static final String SKYPE_SUBFOLDER_ON_MAC = "/Library/Application Support/Skype/";
+	public static final String SKYPE_SUBFOLDER_ON_WINDOWS = "/AppData/Roaming/Skype/";
 	public static final String DB_FILE = "main.db";
 
 	public static File[] findDBs() {
@@ -20,8 +21,7 @@ public class FileSystemUtil {
 		if ((osname.indexOf("mac") >= 0) || (osname.indexOf("darwin") >= 0)) {
 			skypeDirectory = new File(USERHOME + SKYPE_SUBFOLDER_ON_MAC);
 		} else if (osname.indexOf("win") >= 0) {
-			//TODO
-			return null;
+			skypeDirectory = new File(USERHOME + SKYPE_SUBFOLDER_ON_WINDOWS);
 		} else if (osname.indexOf("nux") >= 0) {
 			//TODO
 			return null;
