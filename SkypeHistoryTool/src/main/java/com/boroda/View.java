@@ -14,8 +14,10 @@ import java.util.ResourceBundle;
  * Created by dmitrystarchak on 01/10/14.
  */
 public class View implements Runnable {
-	public static String OVERWRITE_DIALOG_TITLE_KEY = "fileOverwriteDialogTitle";
-	public static String OVERWRITE_DIALOG_MESSAGE_KEY = "fileOverwriteDialogMessage";
+	private static final String ERROR_TITLE_KEY = "errorDialogTitle";
+	private static final String OVERWRITE_DIALOG_TITLE_KEY = "fileOverwriteDialogTitle";
+	private static final String OVERWRITE_DIALOG_MESSAGE_KEY = "fileOverwriteDialogMessage";
+	private static final String DB_NOT_FOUND_MESSAGE_KEY = "dbNotFoundMessage";
 
 	private ResourceBundle labels = ResourceBundle.getBundle("labels");
 	private ContactSelector contactSelector;
@@ -92,5 +94,13 @@ public class View implements Runnable {
 		outputFileChooser.dispose();
 
 		onStart();
+	}
+
+	public void showErrorMessage(String message) {
+		JOptionPane.showMessageDialog(null, message, labels.getString(ERROR_TITLE_KEY), JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void onDBNotFound() {
+		showErrorMessage(labels.getString(DB_NOT_FOUND_MESSAGE_KEY));
 	}
 }

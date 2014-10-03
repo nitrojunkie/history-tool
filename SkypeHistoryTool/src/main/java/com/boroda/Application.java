@@ -29,7 +29,7 @@ public class Application {
 	private View view;
 
 	public static void main(String[] args) throws ClassNotFoundException {
-		if(args.length == 0) {
+		if (args.length == 0) {
 			Application model = new Application();
 
 			javax.swing.SwingUtilities.invokeLater(model.view);
@@ -47,9 +47,10 @@ public class Application {
 
 		view = new View(this);
 
-		if(dbPaths.length == 0) {
-			//TODO: Error
-		} else if(dbPaths.length == 1) {
+		if (dbPaths.length == 0) {
+			view.onDBNotFound();
+			System.exit(1);
+		} else if (dbPaths.length == 1) {
 			//Ok. Select it
 			//dbPath = dbPaths[0];
 			dbPath = new File("/Users/dmitrystarchak/Projects/"); //For debugging
