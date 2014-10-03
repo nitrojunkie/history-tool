@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ButtonDemo" default="default" basedir=".">
+
+	<taskdef name="bundleapp"
+			 classname="com.oracle.appbundler.AppBundlerTask"
+			 classpath="../../appbundler-1.0.jar" />
+
+	<property environment="env" />
+
+	<target name="bundle-history-tool">
+
+		<bundleapp outputdirectory="target"
+				   name="history-tool"
+				   displayname="History Tool"
+				   identifier="components.HistoryTool"
+				   mainclassname="components.HistoryTool">
+			<runtime dir="${env.JAVA_HOME}" />
+			<classpath file="target/skype-history-tool-0.1.jar" />
+		</bundleapp>
+	</target>
+
+
+
+</project>
